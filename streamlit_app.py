@@ -4,7 +4,8 @@ import streamlit as st
 
 
 # Configurazione
-API_URL = 'https://api.football-data.org/v2/competitions/SA/matches?dateFrom=2024-01-01&dateTo=2024-01-31'
+API_URL = 'https://api.football-data.org/v4/competitions/SA/matches?season=2024'
+# API_URL = 'https://api.football-data.org/v4/competitions/SA/matches?dateFrom=2024-10-01&dateTo=2024-10-31'
 API_KEY = ''
 
 headers = {'X-Auth-Token': API_KEY}
@@ -20,8 +21,14 @@ matches = pd.json_normalize(data['matches'])
 matches.to_csv('serie_a_matches.csv', index=False)
 
 
-st.title('Serie A predictor')
 
-st.write('Hello world!')
+def get_match_result(row):
+    if row['score.fullTime.home'] > row['score.fullTime.away']:
+        return '1'
+    elif row['score.fullTime.home'] == row['score.fullTime.away']:
+        return 'x'
+    else:
+        return '2'
 
-st.dataframe(matches)
+matches['matchResult'] = matches.apply(get_match_result, axis=1)
+
