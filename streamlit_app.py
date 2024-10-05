@@ -5,7 +5,7 @@ import streamlit as st
 
 # Configurazione
 API_URL = 'https://api.football-data.org/v2/competitions/SA/matches?dateFrom=2024-01-01&dateTo=2024-01-31'
-API_KEY = '618e7151180f445f8dc99cdbb440f4ef'
+API_KEY = ''
 
 headers = {'X-Auth-Token': API_KEY}
 
